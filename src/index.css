@@ -73,5 +73,10 @@ body {
 .pad-x { padding-inline: var(--gx); }
 .left-gx { left: var(--gx); }
 .services-track { padding-left: var(--gx); padding-right: var(--gx); }
-@media (min-width: 900px) { .services-track { padding-left: calc(var(--gx) + 30vw); } }
+@media (min-width: 768px) { .services-track { padding-left: calc(var(--gx) + 30vw); } }
 @media (min-width: 768px) { .services-head { left: var(--gx); padding-inline: 0; } }
+
+/* Slow push-in on the still hero (phones / reduced-motion off) */
+.kenburns { animation: kenburns 18s ease-out forwards; transform-origin: 50% 60%; }
+@keyframes kenburns { from { transform: scale(1.14); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } }

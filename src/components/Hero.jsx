@@ -38,7 +38,7 @@ function useStaticHero() {
 function StaticHero() {
   return (
     <section id="top" className="relative flex min-h-[100svh] items-end overflow-hidden">
-      <img src={POSTER} alt="A finished TrueCraft bathroom glowing at golden hour" className="absolute inset-0 h-full w-full object-cover" />
+      <img src={POSTER} alt="A finished TrueCraft bathroom glowing at golden hour" className="kenburns absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/55 to-canvas/10" />
       <div className="relative z-10 pad-x pb-20 pt-40">
         <p className="label mb-4">TrueCraft Renovations</p>

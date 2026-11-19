@@ -24,22 +24,40 @@ const IconHelmet = () => (<Icon><path d="M8 32 C8 20 15 12 24 12 C33 12 40 20 40
 /* ---------- NAV ---------- */
 export function Nav() {
   const [solid, setSolid] = useState(false)
+  const [open, setOpen] = useState(false)
   useEffect(() => {
     const h = () => setSolid(window.scrollY > 80)
     h(); window.addEventListener('scroll', h, { passive: true })
     return () => window.removeEventListener('scroll', h)
   }, [])
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? 'hidden' : ''
+    return () => { document.documentElement.style.overflow = '' }
+  }, [open])
+  const links = [['#services', 'Services'], ['#process', 'Process'], ['#faq', 'Questions'], ['#contact', 'Contact']]
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between pad-x py-4 transition-all duration-500 ${solid ? 'bg-canvas/80 backdrop-blur-md' : ''}`}>
-      <a href="#top" aria-label="TrueCraft Renovations, home"><img src="/img/logo-light.png" alt="TrueCraft Renovations" className="h-12 w-auto md:h-14" /></a>
-      <nav className="hidden items-center gap-9 text-sm font-medium text-ink-2 md:flex">
-        <a href="#services" className="transition-colors hover:text-accent">Services</a>
-        <a href="#process" className="transition-colors hover:text-accent">Process</a>
-        <a href="#faq" className="transition-colors hover:text-accent">Questions</a>
-        <a href={PHONE_HREF} className="font-mono tracking-widest text-ink transition-colors hover:text-accent">{PHONE}</a>
-      </nav>
-      <a href="#contact" className="rounded-full border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-canvas">Get a quote</a>
-    </header>
+    <>
+      <header className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between pad-x py-3 transition-all duration-500 md:py-4 ${solid || open ? 'bg-canvas/85 backdrop-blur-md' : ''}`}>
+        <a href="#top" onClick={() => setOpen(false)} aria-label="TrueCraft Renovations, home"><img src="/img/logo-light.png" alt="TrueCraft Renovations" className="h-11 w-auto md:h-14" /></a>
+        <nav className="hidden items-center gap-9 text-sm font-medium text-ink-2 md:flex">
+          <a href="#services" className="transition-colors hover:text-accent">Services</a>
+          <a href="#process" className="transition-colors hover:text-accent">Process</a>
+          <a href="#faq" className="transition-colors hover:text-accent">Questions</a>
+          <a href={PHONE_HREF} className="font-mono tracking-widest text-ink transition-colors hover:text-accent">{PHONE}</a>
+        </nav>
+        <a href="#contact" className="hidden rounded-full border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-canvas md:inline-block">Get a quote</a>
+        <button onClick={() => setOpen(!open)} aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} className="relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-[6px] md:hidden">
+          <span className={`h-px w-6 bg-ink transition-transform duration-300 ${open ? 'translate-y-[3.5px] rotate-45' : ''}`} />
+          <span className={`h-px w-6 bg-ink transition-transform duration-300 ${open ? '-translate-y-[3.5px] -rotate-45' : ''}`} />
+        </button>
+      </header>
+      <div className={`fixed inset-0 z-40 flex flex-col justify-center gap-2 bg-canvas pad-x pt-20 transition-all duration-500 md:hidden ${open ? 'visible opacity-100' : 'invisible opacity-0'}`}>
+        {links.map(([h, t], i) => (
+          <a key={h} href={h} onClick={() => setOpen(false)} className="border-b border-line py-5 font-display text-4xl transition-all duration-500" style={{ transitionDelay: open ? `${i * 70}ms` : '0ms', transform: open ? 'none' : 'translateY(20px)' }}>{t}</a>
+        ))}
+        <a href={PHONE_HREF} className="mt-8 font-mono text-xl tracking-widest text-accent">{PHONE}</a>
+      </div>
+    </>
   )
 }
 
@@ -101,7 +119,7 @@ export function Services() {
   const track = useRef(null)
   useEffect(() => {
     const mm = gsap.matchMedia()
-    mm.add('(min-width: 900px)', () => {
+    mm.add('(min-width: 768px)', () => {
       const dist = () => track.current.scrollWidth - window.innerWidth
       gsap.to(track.current, {
         x: () => -dist(), ease: 'none',
@@ -228,7 +246,7 @@ export function Trust() {
             </div>
           </div>
           {creds.map(([Ico, t, d]) => (
-            <div key={t} className="group flex flex-col justify-between gap-10 border-b border-line py-10 transition-colors duration-500 last:border-b-0 hover:bg-accent/[0.04] md:border-b-0 md:border-l md:px-8 md:py-14">
+            <div key={t} className="group flex flex-col justify-between gap-6 border-b border-line py-8 transition-colors duration-500 last:border-b-0 hover:bg-accent/[0.04] md:gap-10 md:border-b-0 md:border-l md:px-8 md:py-14">
               <Ico />
               <div>
                 <h3 className="font-display text-3xl">{t}</h3>
