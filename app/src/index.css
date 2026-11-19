@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #14100d;
+  --color-panel: #1d1814;
+  --color-panel-2: #261f19;
+  --color-accent: #f9962a;
+  --color-accent-hover: #ffb552;
+  --color-accent-deep: #e8631a;
+  --color-ink: #f6eee4;
+  --color-ink-2: #b9ab9b;
+  --color-line: rgba(249, 150, 42, 0.22);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html { background: var(--color-canvas); }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--color-accent); color: #14100d; }
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); } 20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); } 60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); } 100% { transform: translate(0, 0); }
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.glow-text { text-shadow: 0 0 40px rgba(249, 150, 42, 0.35); }
+.caption-shadow { text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.6); }
+
+.marquee { animation: marquee 38s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+.ring-spin { animation: spin 1.2s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain::after, .marquee { animation: none; }
+}
+
+/* Content never exceeds 1440px; backgrounds stay full width */
+:root { --gx: max(1.5rem, calc((100vw - 1440px) / 2)); }
+@media (min-width: 768px) { :root { --gx: max(3.5rem, calc((100vw - 1440px) / 2)); } }
+.pad-x { padding-inline: var(--gx); }
+.left-gx { left: var(--gx); }
+.services-track { padding-left: var(--gx); padding-right: var(--gx); }
+@media (min-width: 900px) { .services-track { padding-left: calc(var(--gx) + 30vw); } }
+@media (min-width: 768px) { .services-head { left: var(--gx); padding-inline: 0; } }

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+_review/
+.claude/
+10k-websites-skill.zip
+*.log
+.DS_Store
