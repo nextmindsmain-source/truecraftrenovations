@@ -44,7 +44,7 @@ function StaticHero() {
         <p className="label mb-4">TrueCraft Renovations</p>
         <h1 className="glow-text font-display text-6xl font-extrabold leading-[0.95] md:text-8xl">Built true.<br />Crafted to last.</h1>
         <p className="mt-6 max-w-md text-lg text-ink-2">Interior finishing and bathroom renovations across the Niagara Region.</p>
-        <div className="mt-8"><MagneticButton href="#contact">Book a 2027 project</MagneticButton></div>
+        <div className="mt-8"><MagneticButton href="#contact">Book Now</MagneticButton></div>
       </div>
     </section>
   )
@@ -212,7 +212,7 @@ function ScrubHero() {
             <p className="caption-shadow mt-6 max-w-md text-lg text-ink">{b.sub}</p>
             {b.cta && (
               <div className="mt-9 flex flex-wrap items-center gap-5">
-                <MagneticButton href="#contact">Book a 2027 project</MagneticButton>
+                <MagneticButton href="#contact">Book Now</MagneticButton>
                 <a href="tel:9053597583" className="font-mono text-sm tracking-widest text-ink hover:text-accent">905 359 7583</a>
               </div>
             )}
