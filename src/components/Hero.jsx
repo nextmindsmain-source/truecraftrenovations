@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { MagneticButton } from './ui.jsx'
 
 const VIDEO_URL = '/video/hero-scrub.mp4'
-const POSTER = '/img/bathroom.webp'
-const SCRUB_POSTER = '/img/blueprint.webp'
+const POSTER = '/img/room-end.webp'
+const SCRUB_POSTER = '/img/room-start.webp'
 
 const BANDS = [
   { a: 0.0, b: 0.2, kicker: 'TrueCraft Renovations', title: 'Built true.', sub: 'Interior finishing and bathroom renovations across Niagara.' },
-  { a: 0.26, b: 0.46, kicker: 'Step one', title: 'It starts with a plan.', sub: 'Every wall, every line, measured twice.' },
-  { a: 0.52, b: 0.72, kicker: 'Step two', title: 'Then the plan gets built.', sub: 'Clean work, on schedule, in your home.' },
-  { a: 0.78, b: 1.01, kicker: 'The result', title: 'Square. Level. Plumb.', sub: 'Crafted to last.', cta: true },
+  { a: 0.2, b: 0.38, kicker: 'Step one', title: 'Every home starts bare.', sub: 'Studs, subfloor and a plan, measured twice.' },
+  { a: 0.46, b: 0.68, kicker: 'Step two', title: 'Then it gets built.', sub: 'Clean work, on schedule, in your home.' },
+  { a: 0.76, b: 1.01, kicker: 'The result', title: 'Square. Level. Plumb.', sub: 'Crafted to last.', cta: true },
 ]
 
 const ramp = 0.035
@@ -109,15 +109,15 @@ function ScrubHero() {
       if (barTop.current && barTop.current.style.height !== bh) { barTop.current.style.height = bh; barBot.current.style.height = bh }
       if (flare.current) flare.current.style.opacity = Math.max(0, 1 - Math.abs(p - 0.5) / 0.14).toFixed(2)
       if (hud.current) {
-        const sec = p * 6.04
+        const sec = p * 10.0
         const f = Math.floor((sec % 1) * 24)
-        hud.current.textContent = `00:00:0${Math.floor(sec)}:${String(f).padStart(2, '0')}`
+        hud.current.textContent = `00:00:${String(Math.floor(sec)).padStart(2, '0')}:${String(f).padStart(2, '0')}`
       }
     }
 
     const tick = (now) => {
       const dt = Math.min(100, now - (last || now)); last = now
-      shown += (target - shown) * (1 - Math.pow(1 - 0.14, dt / 16.667))
+      shown += (target - shown) * (1 - Math.pow(1 - 0.075, dt / 16.667))
       if (Math.abs(target - shown) < 0.0004) { shown = target; raf = null; last = 0 } else raf = requestAnimationFrame(tick)
       requestSeek(shown * v.duration)
       paintBands(shown)
@@ -137,7 +137,7 @@ function ScrubHero() {
       try {
         const res = await fetch(VIDEO_URL, { signal: ctrl.signal })
         if (!res.ok) throw new Error('bad')
-        const total = Number(res.headers.get('Content-Length')) || 6_000_000
+        const total = Number(res.headers.get('Content-Length')) || 11_720_000
         const reader = res.body.getReader()
         const chunks = []; let got = 0, lastRing = 0
         for (;;) {
@@ -170,7 +170,7 @@ function ScrubHero() {
   }, [])
 
   return (
-    <section id="top" ref={wrap} className="relative" style={{ height: '480vh' }}>
+    <section id="top" ref={wrap} className="relative" style={{ height: '620vh' }}>
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden bg-canvas">
         <img
           src={SCRUB_POSTER}
@@ -189,7 +189,7 @@ function ScrubHero() {
           style={{ opacity: ready ? 1 : 0 }}
         />
         {/* legibility: left scrim sits behind every caption */}
-        <div ref={scrim} className="absolute inset-0 bg-gradient-to-r from-canvas/90 via-canvas/45 to-transparent" />
+        <div ref={scrim} className="absolute inset-0 bg-gradient-to-r from-canvas/90 via-canvas/50 to-canvas/5" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-canvas to-transparent" />
         {/* anamorphic lens streak, peaks while the blueprint dissolves into the room */}
         <div ref={flare} className="pointer-events-none absolute left-0 right-0 top-1/2 h-px opacity-0 mix-blend-screen" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,181,82,0.9) 50%, transparent)', boxShadow: '0 0 40px 12px rgba(249,150,42,0.35)' }} />
