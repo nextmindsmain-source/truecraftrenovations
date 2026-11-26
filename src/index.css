@@ -80,3 +80,9 @@ body {
 .kenburns { animation: kenburns 18s ease-out forwards; transform-origin: 50% 60%; }
 @keyframes kenburns { from { transform: scale(1.14); } to { transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } }
+
+/* Touch devices: static grain (animating it costs battery) and comfortable tap targets */
+@media (pointer: coarse), (max-width: 767px) {
+  .grain::after { animation: none; inset: 0; }
+  footer a { padding-block: 0.4rem; }
+}

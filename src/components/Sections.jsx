@@ -179,7 +179,7 @@ export function Process() {
   return (
     <section id="process" ref={wrap} className="relative z-10 bg-canvas" style={{ height: '420vh' }}>
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center gap-6 overflow-hidden pad-x pt-24 md:grid md:grid-cols-[1.05fr_1fr] md:items-center md:gap-20 md:pt-0">
-        <div className="relative mx-auto aspect-[16/11] w-full max-w-xl overflow-hidden rounded-2xl border border-line md:aspect-[4/5] md:max-h-[78vh] md:max-w-none">
+        <div className="relative mx-auto aspect-[16/11] w-full max-w-xl overflow-hidden rounded-2xl border border-line max-h-[30vh] shrink-0 md:aspect-[4/5] md:max-h-[78vh] md:max-w-none">
           {STEPS.map(([t, , img], i) => (
             <img
               key={t}
@@ -283,7 +283,7 @@ export function Local() {
       </div>
       <div>
         <p className="label mb-4">Chapter V &middot; Local to Niagara</p>
-        <SplitText text="Your neighbours in the Niagara Region." className="font-display text-5xl font-extrabold leading-[1.02] md:text-6xl" />
+        <SplitText text="Your neighbours in the Niagara Region." className="font-display text-4xl font-extrabold leading-[1.02] md:text-6xl" />
         <p className="mt-6 max-w-lg text-lg text-ink-2">
           When a job needs a licensed or specialty trade, we bring in people we trust and manage the schedule so you deal with one team. We respect your home and keep the site clean.
         </p>

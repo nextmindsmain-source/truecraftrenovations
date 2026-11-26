@@ -9,6 +9,9 @@ import { Preloader, Cursor, Vignette } from './components/Cinema.jsx'
 import { Nav, Marquee, Premise, Services, Process, Trust, Local, Faq, Contact, Footer } from './components/Sections.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
+// the phone address bar showing and hiding must not re-measure pinned sections
+ScrollTrigger.config({ ignoreMobileResize: true })
+const lightDevice = window.matchMedia('(pointer: coarse), (max-width: 767px)').matches
 
 export default function App() {
   useEffect(() => {
@@ -26,7 +29,7 @@ export default function App() {
       <Preloader />
       <Cursor />
       <Vignette />
-      <Suspense fallback={null}><Embers /></Suspense>
+      {!lightDevice && <Suspense fallback={null}><Embers /></Suspense>}
       <Nav />
       <main>
         <Hero />
